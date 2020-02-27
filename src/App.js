@@ -1,24 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useRef } from 'react';
+import { Form } from '@unform/web';
+
+import Input from './components/Form'
+// import {DatePicker} from './components/Form/datePicker'
+
+const initialData = {
+  email: 'paulo.henr3016@gmail.com'
+}
 
 function App() {
+  const formRef = useRef(null)
+  function handleSubmit(data) {
+    if(data.name === ''){
+     formRef.current.setFieldError('name', 'O nome é obrigatório');
+      
+    }
+    
+    console.log(data);
+    
+    
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <h1>Hello World</h1>
+
+     <Form ref={formRef} initialData={initialData} onSubmit={handleSubmit}>
+       <Input name="name" />
+       <Input type="email" name="email" />
+       <Input name="address.street" />
+       <Input name="address.number" />
+
+       <button type='submit'>Enviar</button>
+     </Form>
     </div>
   );
 }
